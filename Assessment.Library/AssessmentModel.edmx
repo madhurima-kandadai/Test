@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AssessmentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientTypeId" />
+          </Key>
+          <Property Name="ClientTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CompanyDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Total_Employees" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="Goal" Type="nvarchar(max)" />
+          <Property Name="ClientTypeId" Type="int" />
+          <Property Name="W_Employees" Type="int" />
+          <Property Name="M_Employees" Type="int" />
+          <Property Name="Year" Type="nvarchar" MaxLength="5" />
+          <Property Name="CompanyId" Type="int" />
+        </EntityType>
+        <Association Name="FK_CompanyDetails_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="CompanyDetails" Type="Self.CompanyDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyDetails">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyDetails_CompanyDetails">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="CompanyDetails" Type="Self.CompanyDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientTypeId" />
+            </Principal>
+            <Dependent Role="CompanyDetails">
+              <PropertyRef Name="ClientTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AssessmentModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyDetails" EntityType="Self.CompanyDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CompanyDetails_Company" Association="Self.FK_CompanyDetails_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CompanyDetails" EntitySet="CompanyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyDetails_CompanyDetails" Association="Self.FK_CompanyDetails_CompanyDetails">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="CompanyDetails" EntitySet="CompanyDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AssessmentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientTypeId" />
+          </Key>
+          <Property Name="ClientTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CompanyDetails" Relationship="Self.FK_CompanyDetails_CompanyDetails" FromRole="Client" ToRole="CompanyDetails" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CompanyDetails" Relationship="Self.FK_CompanyDetails_Company" FromRole="Company" ToRole="CompanyDetails" />
+        </EntityType>
+        <EntityType Name="CompanyDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Total_Employees" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Goal" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClientTypeId" Type="Int32" />
+          <Property Name="W_Employees" Type="Int32" />
+          <Property Name="M_Employees" Type="Int32" />
+          <Property Name="Year" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_CompanyDetails_CompanyDetails" FromRole="CompanyDetails" ToRole="Client" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_CompanyDetails_Company" FromRole="CompanyDetails" ToRole="Company" />
+        </EntityType>
+        <Association Name="FK_CompanyDetails_CompanyDetails">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="CompanyDetails" Type="Self.CompanyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientTypeId" />
+            </Principal>
+            <Dependent Role="CompanyDetails">
+              <PropertyRef Name="ClientTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyDetails_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="CompanyDetails" Type="Self.CompanyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyDetails">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AssessmentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="CompanyDetails" EntityType="Self.CompanyDetail" />
+          <AssociationSet Name="FK_CompanyDetails_CompanyDetails" Association="Self.FK_CompanyDetails_CompanyDetails">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="CompanyDetails" EntitySet="CompanyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyDetails_Company" Association="Self.FK_CompanyDetails_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="CompanyDetails" EntitySet="CompanyDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AssessmentModelStoreContainer" CdmEntityContainer="AssessmentEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="AssessmentModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ClientTypeId" ColumnName="ClientTypeId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="AssessmentModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyDetails">
+            <EntityTypeMapping TypeName="AssessmentModel.CompanyDetail">
+              <MappingFragment StoreEntitySet="CompanyDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="Total_Employees" ColumnName="Total_Employees" />
+                <ScalarProperty Name="Goal" ColumnName="Goal" />
+                <ScalarProperty Name="ClientTypeId" ColumnName="ClientTypeId" />
+                <ScalarProperty Name="W_Employees" ColumnName="W_Employees" />
+                <ScalarProperty Name="M_Employees" ColumnName="M_Employees" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
