@@ -37,7 +37,7 @@ namespace Assessment.Library
         }
 
         public List<CompanyModel> GetCompanyWithMoreEmployees()
-        {            
+        {
             var companyModelList = new List<CompanyModel>();
             var companyDetailsList = entities.CompanyDetails.AsQueryable().ToList();
             var list = entities.Companies.AsQueryable().ToList();
@@ -68,15 +68,40 @@ namespace Assessment.Library
             var companyDetailslist = entities.CompanyDetails.ToList();
             var companies = entities.Companies.ToList();
             var list = (from detail in companyDetailslist
-                         join company in companies on detail.CompanyId equals company.CompanyId
-                         select new CompanyModel {
-                             CompanyName = company.CompanyName,
-                             M_Employees = detail.M_Employees,
-                             W_Employees = detail.W_Employees,
-                             ProjectName = detail.ProjectName
+                        join company in companies on detail.CompanyId equals company.CompanyId
+                        select new CompanyModel
+                        {
+                            CompanyName = company.CompanyName,
+                            M_Employees = detail.M_Employees,
+                            W_Employees = detail.W_Employees,
+                            ProjectName = detail.ProjectName,
+                            Year = detail.Year
 
-                         }).ToList();
+                        }).ToList();
             return list;
         }
+
+        public List<CompanyModel> GetProjectsBasedOnSearch(string filter)
+        {
+            var companyDetailslist = entities.CompanyDetails.ToList();
+            var companies = entities.Companies.ToList();
+            var list = (from detail in companyDetailslist
+                        join company in companies on detail.CompanyId equals company.CompanyId
+                        select new CompanyModel
+                        {
+                            CompanyName = company.CompanyName,
+                            M_Employees = detail.M_Employees,
+                            W_Employees = detail.W_Employees,
+                            ProjectName = detail.ProjectName,
+                            Year = detail.Year
+
+                        }).ToList();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                list = list.Where(x => x.CompanyName.Contains(filter) || x.ProjectName.Contains(filter)).ToList();
+            }
+            return list;
+        }
+
     }
 }

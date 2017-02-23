@@ -17,5 +17,7 @@ namespace Assessment.Library.Models
         public int? W_Employees { get; set; }
 
         public int? M_Employees { get; set; }
+
+        public string Year { get; set; }
     }
 }
