@@ -16,12 +16,12 @@ namespace Assessment.Console
         static void Main(string[] args)
         {
             AssessmentEntities entities = new AssessmentEntities();
-            Class1 cls = new Class1();
+            CompanyService cls = new CompanyService();
             CompanyList = entities.Companies.AsQueryable().ToList();
             ClientList = entities.Clients.AsQueryable().ToList();
             var list = entities.CompanyDetails.AsQueryable().ToList();
-            var companyName = cls.GetCompanyName(list);
-            cls.GetCompanyWithMoreEmployees(list);
+            //    var companyName = cls.GetCompanyName(list);
+            cls.GetCompanyWithMoreEmployees();
             var companyDetailsList = new List<CompanyDetail>();
             Get2016Data(companyDetailsList);
             Get2017Data(companyDetailsList);

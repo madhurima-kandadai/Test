@@ -1,31 +1,57 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<script src="~/Scripts/AssessmentScripts/CompanyDetailsController.js"></script>
+<style>
+    th, td,tr {
+    padding: 15px;
+    text-align: left;
+}
+</style>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div ng-controller="CompanyDetailsController" class="body-content">
+    <div>
+        Company with Least Women to Men Ratio : {{companyName}}
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <div>
+        List of Companies with more employees in 2017:
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div>
+        <table class="table-bordered">
+            <thead>
+                <tr>Company Name</tr>
+                <tr>Difference</tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="company in companyList">
+                    <td>{{company.CompanyName}}</td>
+                    <td>{{company.DifferenceInEmployees}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        Search Box: <input type="text" ng-model="searchText" />
+    </div>
+    <div>
+        <table class="table-bordered">
+            <thead>
+                <tr>Project Name</tr>
+                <tr>Company Name</tr>
+                <tr>Male Employees</tr>
+                <tr>Female Employees</tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="project in projectList | filter : searchText">
+                    <td>{{project.ProjectName}}</td>
+                    <td>{{project.CompanyName}}</td>
+                    <td>{{project.M_Employees}}</td>
+                    <td>{{project.W_Employees}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
