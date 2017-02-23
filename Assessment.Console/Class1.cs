@@ -12,6 +12,14 @@ namespace Assessment.Console
         public string GetCompanyName(List<CompanyDetail> companyDetailsList)
         {
             var list = companyDetailsList.Where(x => x.Year == "2017").ToList();
+            var results = list.GroupBy(p => p.CompanyId,
+                               p => p.W_Employees,                               
+                               (key, g) => new
+                               {
+                                   PersonId = key,
+                                   Cars = g.Sum()
+                               }
+                              );
             list.ForEach(x => x.Ratio = (decimal)x.W_Employees / (decimal)x.M_Employees);
             return list.OrderBy(x => x.Ratio).FirstOrDefault().Company.CompanyName;
         }

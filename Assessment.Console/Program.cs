@@ -20,7 +20,7 @@ namespace Assessment.Console
             CompanyList = entities.Companies.AsQueryable().ToList();
             ClientList = entities.Clients.AsQueryable().ToList();
             var list = entities.CompanyDetails.AsQueryable().ToList();
-            cls.GetCompanyName(list);
+            var companyName = cls.GetCompanyName(list);
             cls.GetCompanyWithMoreEmployees(list);
             var companyDetailsList = new List<CompanyDetail>();
             Get2016Data(companyDetailsList);
