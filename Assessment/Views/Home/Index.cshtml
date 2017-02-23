@@ -11,18 +11,20 @@
 
 
 <div ng-controller="CompanyDetailsController" class="body-content">
-    <div>
+    <pre>
         Company with Least Women to Men Ratio : {{companyName}}
-    </div>
+    </pre>
 
     <div>
         List of Companies with more employees in 2017:
     </div>
     <div>
-        <table class="table-bordered">
+        <table class="table table-striped">
             <thead>
-                <tr>Company Name</tr>
-                <tr>Difference</tr>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Difference</th>
+                </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="company in companyList">
@@ -34,15 +36,20 @@
     </div>
 
     <div>
-        Search Box: <input type="text" ng-model="searchText" />
+        <div class="form-group">
+            <label for="searchBox">Search Box</label>
+            <input type="text" class="form-control" ng-model="searchText" id="searchBox" placeholder="search here">
+        </div>
     </div>
     <div>
-        <table class="table-bordered">
+        <table id="projectTable" class="table table-striped table-hover">
             <thead>
-                <tr>Project Name</tr>
-                <tr>Company Name</tr>
-                <tr>Male Employees</tr>
-                <tr>Female Employees</tr>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Company Name</th>
+                    <th>Male Employees</th>
+                    <th>Female Employees</th>
+                </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="project in projectList | filter : searchText">
