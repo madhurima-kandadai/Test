@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assessment.Console.Models
+namespace Assessment.Library.Models
 {
     public class CompanyModel
     {

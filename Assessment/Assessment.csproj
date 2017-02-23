@@ -290,10 +290,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Assessment.Console\Assessment.Console.csproj">
-      <Project>{21F9E99D-BF30-4943-9CEB-CF912B5E0C0B}</Project>
-      <Name>Assessment.Console</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Assessment.Library\Assessment.Library.csproj">
       <Project>{28027edb-aa62-427e-a388-03fb896f62d9}</Project>
       <Name>Assessment.Library</Name>
